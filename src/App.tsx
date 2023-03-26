@@ -4,18 +4,20 @@ import './App.css'
 import Home from './Components/Home'
 import ShopPage from './Components/ShopPage'
 import Nav from './Components/Nav'
+import BookPage from './Components/BookPage'
 
 function App() {
   
   return (
-    <div className="bg-slate-300 flex flex-col items-center justify-start  w-full h-screen  p-2  ">
+    <div className=" bg-orange-900 flex flex-col items-center justify-start  w-full h-full  p-2  ">
       <Nav/>
-      <HashRouter>
+      
         <Routes>
           <Route path='/' element={ <Home/> } />
           <Route path='/Shoppage' element={ <ShopPage/> } />
+          <Route path='/Shoppage/:id' element={<BookPage/>}/>
         </Routes>        
-      </HashRouter>
+     
     
       
     </div>
