@@ -1,13 +1,14 @@
-import React from 'react'
+import React,{ReactElement} from 'react'
 import { Link } from 'react-router-dom'
 interface Utils {
-  title:string
-  className: string
+  title:string | ReactElement 
+  className?: string
   click:string
 }
 
- export function Button(props:Utils) {
-  const {title,className,click} = props
+ export function Button({title,className,click}:Utils) {
+  // const {title,className,click} = props
+
   return (
     
     <Link to={click}>

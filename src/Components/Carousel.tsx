@@ -13,7 +13,7 @@ function Carousel() {
             spaceBetween={30}
             centeredSlides={true}
             autoplay={{
-                delay: 3500,
+                delay: 10500,
                 disableOnInteraction: false,
               }}
               
@@ -21,14 +21,14 @@ function Carousel() {
               clickable: true,
             }}
           
-            modules={[Autoplay, Pagination]}
+            modules={[Autoplay,]}
            
             className="mySwiper"
           >
-    <SwiperSlide><img className=' rounded-3xl' src="/src/assets/img/pexels-element-digital-1370295.jpg" alt="" /> </SwiperSlide>
-    <SwiperSlide><img src="/src/assets/img/pexels-emily-768125.jpg" alt="" /></SwiperSlide>
-    <SwiperSlide><img src="/src/assets/img/pexels-stanislav-kondratiev-2908984.jpg" alt="" /></SwiperSlide>
-    <SwiperSlide><img src="/src/assets/img/pexels-wendy-van-zyl-1112048.jpg" alt="" /></SwiperSlide>
+    <SwiperSlide><img className='' src="/src/assets/img/pexels-element-digital-1370295.jpg" alt="" /> </SwiperSlide>
+    <SwiperSlide><img className=' ' src="/src/assets/img/pexels-emily-768125.jpg" alt="" /></SwiperSlide>
+    <SwiperSlide><img className=' ' src="/src/assets/img/pexels-stanislav-kondratiev-2908984.jpg" alt="" /></SwiperSlide>
+    <SwiperSlide><img className=' ' src="/src/assets/img/pexels-wendy-van-zyl-1112048.jpg" alt="" /></SwiperSlide>
           </Swiper>
         </>
       );

@@ -5,7 +5,7 @@ import './index.css'
 import { HashRouter } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  <React.StrictMode >
     <HashRouter>
       <App />
     </HashRouter>

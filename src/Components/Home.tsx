@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Carousel from './Carousel'
 import useFetch from '../utils/useFetch'
 import {key} from '../../key'
@@ -7,33 +7,46 @@ import { Link } from 'react-router-dom'
 
 
 function Home() {
-  const [data, loading] = useFetch(`https://www.googleapis.com/books/v1/volumes?q=react&filter=partial&key=${key}+&maxResults=40`)
+  const [search,setSearch] = useState('book')
+  const [data, loading] = useFetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&filter=partial&key=${key}+&maxResults=40`)
   // console.log(  data! && data!.items)
 
   let books = data!&&data!.items.map((book:any,index:number,) => {
-     console.log(typeof book)
+      let amount = book.saleInfo.listPrice&&book.saleInfo.listPrice.amount + ' '+ book.saleInfo.listPrice.currencyCode 
+      console.log()
+      if(amount! === undefined){
+         amount = 'Free'
+      }
       const {title,descriprition} = book.volumeInfo
       const {smallThumbnail,thumbnail} = book.volumeInfo.imageLinks
-    // console.log(book.id)
-  return <Link key={book.id} to={`/Shoppage/${book.id}`}>
-              <button className=' text-sm m-1 border-2 border-amber-600 rounded-xl flex flex-col items-center w-[140px] h-[235px]  justify-center bg-amber-300 hover:bg-slate-800' >
-                    <img className='m-1 h-32' src={smallThumbnail} alt={title} />
-                    <div className='m-1'>{title}</div>
-              </button>   
-        </Link>
-      
-  } )
-    
+  
+    return <Link key={book.id} to={`/Shoppage/${book.id}`}>
+                <article className='text-xs m-2 pt-2 pb-2  rounded-xl border-2 border-teal-800 flex flex-col items-center  w-[140px] h-[235px]  justify-center bg-amber-300 hover:bg-slate-800' >
+                      <img className='m-1 h-[105px]' src={smallThumbnail} alt={descriprition} />
+                      <div className=' bg-green-600 rounded-lg p-1'>{amount}</div>
+                      <div className='m-1 bg-cyan-700 pb-1 pt-1 w-full font-bold flex justify-center'>{title}</div>
+                       <button
+                         className={'bg-red-700 rounded-lg p-1 font-medium m-1 hover:bg-red-500'}
+                         title='Add To Cart'
+                       >Add To Cart</button>
+                </article>   
+          </Link>
+  })
+ 
+  const  HandleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+}
+if(search === '') return setSearch('book')
+
+    // console.log(search)
   return (
     <div className=' w-full h-full '>
-        <div className=''><Carousel/></div>
+        <div className='w-full'><Carousel/></div>
+        <input className='w-1/1 h-1/1 m-2 rounded-lg text-sm pl-2' type="text" placeholder='Search...' onChange={HandleChange} />
         <div className=' flex flex-wrap justify-center items-center  m-1 '>
             {books}     
         </div>   
-    </div>
-        
-
-   
+    </div>   
   )
 }
 

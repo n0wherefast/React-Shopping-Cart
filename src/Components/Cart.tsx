@@ -3,7 +3,7 @@ import useFetch from '../utils/useFetch'
 import {key} from '../../key'
 import { Link } from 'react-router-dom'
 
-function ShopPage() {
+function Cart() {
    
     // let imgr = data! && data!.items[0].volumeInfo.imageLinks.smallThumbnail
 
@@ -15,4 +15,4 @@ function ShopPage() {
   )
 }
 
-export default ShopPage
+export default Cart

@@ -1,29 +1,27 @@
 import React from 'react'
 import { Button } from '../utils/utils'
+import { FiShoppingCart } from "react-icons/fi";
 
 function Nav() {
-    const  HandleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-         console.log(e.target.value)
-    }
+    
   return (
-    <div className=' text-lg backdrop-blur-3xl bg-amber-300 rounded-2xl m-3 -2xl w-full flex items-center justify-evenly p-2 '>
-             <h1 className='pr-2'>BookShop</h1> 
+    <article className=' text-lg backdrop-blur-3xl bg-yellow-200 rounded-2xl m-2  flex items-center justify-between p-2 '>
+             <h1 className='ml-4 font-bold text-2xl'>BookShop</h1> 
 
              <div className='flex pl-2 '>
-              <input className='w-1/2 m-1 rounded-lg text-sm pl-2' type="text" placeholder='Search' onChange={HandleChange} />
             <Button
                 click = {'/'}
                 title = {'Home'}
-                className = {' text-sm text-white bg-orange-500 p-2 m-1 rounded-xl flex items-center justify-center hover:bg-red-900 cursor-pointer'}
+                className = {' text-sm font-bold text-white bg-teal-600 p-2 m-1 rounded-xl flex items-center justify-center hover:bg-red-900 cursor-pointer'}
             />
              <Button
                 click = {'/Shoppage'}
-                title = {'Shop'}
-                className = {' text-sm text-white bg-orange-500 p-2 m-1 rounded-xl flex items-center justify-center hover:bg-red-900 cursor-pointer'}
+                title = {<FiShoppingCart/>}
+                className = {' text-sm font-bold text-white bg-teal-600 p-2 m-1 h-9 w-9 rounded-xl flex items-center justify-center hover:bg-red-900 cursor-pointer'}
             /> 
              </div>
            
-    </div>
+    </article>
   )
 }
 
