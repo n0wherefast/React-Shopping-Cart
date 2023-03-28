@@ -11,31 +11,42 @@ function Home() {
   const [data, loading] = useFetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&filter=partial&key=${key}+&maxResults=40`)
   // console.log(  data! && data!.items)
 
+  const HandleClick = (e:any) => {
+    // console.log({amount,title,description,thumbnail})
+    e.stopPropagation() 
+    console.log(e)
+  }
+
   let books = data!&&data!.items.map((book:any,index:number,) => {
       let amount = book.saleInfo.listPrice&&book.saleInfo.listPrice.amount + ' '+ book.saleInfo.listPrice.currencyCode 
-      console.log()
+    
       if(amount! === undefined){
          amount = 'Free'
       }
-      const {title,descriprition} = book.volumeInfo
+      const {title,description} = book.volumeInfo
       const {smallThumbnail,thumbnail} = book.volumeInfo.imageLinks
-  
+      // console.log(book)
     return <Link key={book.id} to={`/Shoppage/${book.id}`}>
-                <article className='text-xs m-2 pt-2 pb-2  rounded-xl border-2 border-teal-800 flex flex-col items-center  w-[140px] h-[235px]  justify-center bg-amber-300 hover:bg-slate-800' >
-                      <img className='m-1 h-[105px]' src={smallThumbnail} alt={descriprition} />
+
+                <article className='text-xs m-2 pt-2 pb-2  rounded-xl border-2 border-teal-800 flex flex-col items-center  w-[140px] h-[235px]  justify-center bg-amber-300 hover:bg-slate-800'>
+                      <img className='m-1 h-[105px]' src= {smallThumbnail} alt={description} />
                       <div className=' bg-green-600 rounded-lg p-1'>{amount}</div>
-                      <div className='m-1 bg-cyan-700 pb-1 pt-1 w-full font-bold flex justify-center'>{title}</div>
-                       <button
+                      <div className='m-1 bg-cyan-700 p-1 w-full font-bold flex justify-center'>{title}</div>
+                       <button 
                          className={'bg-red-700 rounded-lg p-1 font-medium m-1 hover:bg-red-500'}
                          title='Add To Cart'
-                       >Add To Cart</button>
+                         onClick={HandleClick}
+                       >Add To Cart
+                       </button>
                 </article>   
-          </Link>
-  })
+                
+           </Link>
+    })
  
-  const  HandleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value)
-}
+    const  HandleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value)
+      }
+
 if(search === '') return setSearch('book')
 
     // console.log(search)

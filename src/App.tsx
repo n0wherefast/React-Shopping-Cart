@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Route,Routes,HashRouter } from 'react-router-dom'
+import { Route,Routes } from 'react-router-dom'
 import './App.css'
 import Home from './Components/Home'
 import Cart from './Components/Cart'
