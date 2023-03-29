@@ -3,6 +3,8 @@ import Carousel from './Carousel'
 import useFetch from '../utils/useFetch'
 import {key} from '../../key'
 import { Link } from 'react-router-dom'
+import { useGlobalContext } from '../context'
+
 
 
 
@@ -11,11 +13,8 @@ function Home() {
   const [data, loading] = useFetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&filter=partial&key=${key}+&maxResults=40`)
   // console.log(  data! && data!.items)
 
-  const HandleClick = (e:any) => {
-    // console.log({amount,title,description,thumbnail})
-    e.stopPropagation() 
-    console.log(e)
-  }
+  
+  const {HandleClick} = useGlobalContext()
 
   let books = data!&&data!.items.map((book:any,index:number,) => {
       let amount = book.saleInfo.listPrice&&book.saleInfo.listPrice.amount + ' '+ book.saleInfo.listPrice.currencyCode 
@@ -28,17 +27,19 @@ function Home() {
       // console.log(book)
     return <Link key={book.id} to={`/Shoppage/${book.id}`}>
 
-                <article className='text-xs m-2 pt-2 pb-2  rounded-xl border-2 border-teal-800 flex flex-col items-center  w-[140px] h-[235px]  justify-center bg-amber-300 hover:bg-slate-800'>
+                <button className='text-xs m-2 pt-2 pb-2  rounded-xl border-2 border-teal-800 flex flex-col items-center  w-[140px] h-[235px]  justify-center bg-amber-300 hover:bg-slate-800 shadow-2xl'
+                      onClick={()=> HandleClick({amount,title,description,thumbnail})}
+                    >
                       <img className='m-1 h-[105px]' src= {smallThumbnail} alt={description} />
                       <div className=' bg-green-600 rounded-lg p-1'>{amount}</div>
-                      <div className='m-1 bg-cyan-700 p-1 w-full font-bold flex justify-center'>{title}</div>
-                       <button 
+                      <div className='m-1 bg-cyan-700 p-1 w-full font-bold flex justify-center '>{title}</div>
+                       {/* <button 
                          className={'bg-red-700 rounded-lg p-1 font-medium m-1 hover:bg-red-500'}
                          title='Add To Cart'
-                         onClick={HandleClick}
+                         
                        >Add To Cart
-                       </button>
-                </article>   
+                       </button> */}
+                </button>   
                 
            </Link>
     })
