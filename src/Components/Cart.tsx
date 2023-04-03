@@ -5,20 +5,21 @@ import { Link } from 'react-router-dom'
 import { useGlobalContext } from '../context'
 
 
+
 function Cart() {
-   
-    // let imgr = data! && data!.items[0].volumeInfo.imageLinks.smallThumbnail
-{/* <button 
-                         className={'bg-red-700 rounded-lg p-1 font-medium m-1 hover:bg-red-500'}
-                         title='Add To Cart'
-                         onClick={HandleClick}
-                       >Add To Cart
-</button> */}
+  const {book,AddToCart,cart}:any = useGlobalContext() 
+   console.log(cart)
+    const carts =cart.map((el:any ,index:number) =>(
+          <div className=' bg-red-700 p-1' key={index}>
+            {el.title} {el.amount}</div>
+        ))
+
   return (
-    <div className=' flex flex-wrap justify-center items-center text-xl m-2 '>
-     
-     
-    </div>
+    <article className=' flex flex-col items-center textlg m-2 p-2 h-full border-2 border-slate-900 rounded-xl  '>
+      <div className=' text-3xl font-bold text-slate-50'>Cart</div>
+      <div className=' text-start m-2 flex flex-col gap-2'>{carts}</div>
+       
+    </article>
   )
 }
 

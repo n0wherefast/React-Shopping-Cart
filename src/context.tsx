@@ -1,5 +1,6 @@
 import {useState,useContext,createContext} from 'react'
 
+
 const AppContext = createContext({})
 
 interface Book {
@@ -10,14 +11,20 @@ interface Book {
 }
 
 const AppProvider = ({children}:any) => {
-
     const [book,setBook] = useState<Book>()
-    const cart:string[] = ['CART']
-    const HandleClick = ({amount,title,description,thumbnail}:Book) => {
-        setBook({amount,title,description,thumbnail})
-        // console.log('prova')
+    const [cart,setCart] = useState<object[]> ([])
+    // const HandleClick = () => {
+    //     // setBook({amount,title,description,thumbnail})
+    // }
+    // console.log()
+
+    const AddToCart = (book:Book) => {
+        const add = [...cart,book]
+        setCart(add)
     }
-    return <AppContext.Provider value={{HandleClick,cart,book}}>
+
+    // console.log(children)
+    return <AppContext.Provider value={{AddToCart,cart,book}}>
             {children}
           </AppContext.Provider>
    }

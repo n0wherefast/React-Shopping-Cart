@@ -11,7 +11,7 @@ function App() {
   // console.log(prova);
   
   return (
-    <article className=" bg-teal-700 flex flex-col items-center justify-start  w-full h-full   ">
+    <article className=" bg-teal-700 flex flex-col items-center justify-start  w-full h-screen   ">
       <div className='p-1 w-full'><Nav/></div>
       
         <Routes>
