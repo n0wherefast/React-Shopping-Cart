@@ -13,18 +13,34 @@ interface Book {
 const AppProvider = ({children}:any) => {
     const [book,setBook] = useState<Book>()
     const [cart,setCart] = useState<object[]> ([])
+    
     // const HandleClick = () => {
     //     // setBook({amount,title,description,thumbnail})
     // }
+
     // console.log()
+
+    //////////////////// BooKPage
 
     const AddToCart = (book:Book) => {
         const add = [...cart,book]
         setCart(add)
     }
+   ///////////////////// BooKPage 
+
+   ///////////////////// Cart
+
+const RemToCart = () => {   
+   setCart(item => item.filter((_, index) => index !==0))
+ } 
+   ///////////////////// Cart 
+
+
+
+
 
     // console.log(children)
-    return <AppContext.Provider value={{AddToCart,cart,book}}>
+    return <AppContext.Provider value={{AddToCart,cart,setBook,book,RemToCart}}>
             {children}
           </AppContext.Provider>
    }
