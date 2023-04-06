@@ -1,20 +1,24 @@
 import React, { useState } from 'react'
 import Carousel from './Carousel'
 import useFetch from '../utils/useFetch'
+import BookItem from './BookItem'
+import { Book } from '../context/context'
 import {key} from '../../key'
 import { Link } from 'react-router-dom'
-import { useGlobalContext } from '../context'
+import { useGlobalContext } from '../context/context'
+import Lottie from 'react-lottie'
+import animationData from '../assets/animation/125544-books.json'
 
 
 function Home() {
   const [search,setSearch] = useState('book')
   const [data, loading] = useFetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&filter=partial&key=${key}+&maxResults=40`)
   // console.log(  data! && data!.items)
-  const {HandleClick}:any = useGlobalContext()
+  const{}:any = useGlobalContext()
   
   let books = data!&&data!.items.map((book:any,index:number,) => {
       let amount = book.saleInfo.listPrice&&book.saleInfo.listPrice.amount + ' '+ book.saleInfo.listPrice.currencyCode 
-      const {title,description,subtitle,publisher,authors} = book.volumeInfo
+      const {title,description,subtitle,publisher,authors}:Book = book.volumeInfo
       const {smallThumbnail,thumbnail} = book.volumeInfo.imageLinks
       const  newTitle = title.length >25 ?  title.slice(0,15) : title
       // const setStyleAuth = authors.length > 20 ? 
@@ -22,30 +26,17 @@ function Home() {
       if(amount! === undefined){
          amount = 'Free'
       }
-      // console.log(book)
+      console.log()
     return <Link key={book.id} to={`/Shoppage/${book.id}`}>
-
-                <button className='text-xs m-2   flex items-center  h-[140px] w-[265px] justify-between bg-amber-300 hover:bg-slate-800 shadow-2xl'
-                //  className='text-xs m-2 pt-2 pb-2  rounded-xl border-2 border-teal-800 flex flex-col items-center  w-[140px] h-[235px]  justify-center bg-amber-300 hover:bg-slate-800 shadow-2xl'
-                      // onClick={()=> HandleClick(book.id)}
-                      // {amount,title,description,thumbnail}
-                    >
-                      <img className=' h-[140px]' src= {smallThumbnail} alt={description} />
-                      <div className='flex flex-col  w-full h-[140px] justify-between items-center'> 
-                        <h1 className='m-1  w-full text-base font-semibold p-1  flex justify-center '>{newTitle}</h1>
-                        <h2 className=' w-full font-medium text-xs flex justify-center '>{authors}</h2>
-                        <h3 className='  w-full p-1 flex justify-center '>{publisher}</h3>
-                        <div className=' bg-green-600 rounded-lg w-1/2 p-1 m-2'>{amount}</div>
-                      </div>
-                      
-                       {/* <button 
-                         className={'bg-red-700 rounded-lg p-1 font-medium m-1 hover:bg-red-500'}
-                         title='Add To Cart'
-                         
-                       >Add To Cart
-                       </button> */}
-                </button>   
-                
+              <BookItem
+              title={newTitle}
+              description = {description}
+              subtitle = {subtitle}
+              publisher = {publisher}
+              authors = {authors}
+              image = {smallThumbnail}
+              amount = {amount}
+              />               
            </Link>
     })
  
@@ -57,11 +48,23 @@ if(search === '') return setSearch('book')
 
     // console.log(search)
   return (
-    <div className=' w-full h-full bg-teal-700  '>
-        <div className='w-full'><Carousel/></div>
-        <input className='w-1/1 h-1/1 m-2 rounded-lg text-sm pl-2' type="text" placeholder='Search...' onChange={HandleChange} />
-        <div className=' flex flex-wrap justify-center items-center  bg-teal-700  '>
-            {loading? <div className='h-screen'>Loading...</div> : books}      
+    <div className='flex flex-col items-center w-full h-full bg-teal-200 '>
+        <div className='w-full md:w-[700px]'><Carousel/></div>        
+        <input className='w-1/1 h-1/1 m-2 rounded-lg text-sm pl-2 border-2 border-teal-600' type="text" placeholder='Search...' onChange={HandleChange} />
+        <div className=' flex flex-wrap justify-center items-center w-full  bg-teal-200  '>
+            {loading? <div className='  h-full'>
+              <Lottie
+              options={{
+                loop: true,
+                autoplay: true,
+                animationData: animationData,
+                rendererSettings: {
+                  preserveAspectRatio: "xMidYMid slice",
+                },}}
+                width={150}
+                height={150} 
+              />
+              </div> : books}      
         </div>   
     </div>   
   )
