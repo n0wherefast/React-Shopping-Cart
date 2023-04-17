@@ -1,85 +1,73 @@
 import {useState, useContext, createContext, useEffect,useReducer,} from "react";
 import reducer from "./reducer";
-import {ADD_TO_CART} from "./action";
-
+import { Props,Book,INITIAL_STATE } from "../utils/typesInterface";
+import {ADD_TO_CART,
+  DELETE_ITEM,
+  INCREASE_ITEM,
+  DECREASE_ITEM,
+  ADD_BOOK,
+  TOTAL} from './action';
 const AppContext = createContext({});
 
-export interface Book {
-  amount: string;
-  title: string;
-  description: string;
-  thumbnail?: string;
-  image?: string;
-  quantity?: number;
-  subtitle?: string;
-  publisher?: string;
-  authors?: string;
-}
 
-interface Props {
-  children: JSX.Element;
-}
-const initialState: any = {
-  cartS: [],
+const initialState: INITIAL_STATE = {
+  book:{
+    id: 0,
+    title:'',
+    description: "",
+    thumbnail: "",
+    amount: "",
+    qty:1,
+  },
+  cart: [],
   total: 0,
   itemCounter: 0,
 };
 
 const AppProvider = ({ children }: Props) => {
-  const [quantity, setQuantity] = useState(1);
-  const [book, setBook] = useState<Book>({
-    title: "",
-    description: "",
-    thumbnail: "",
-    amount: "",
-    quantity: quantity,
-  });
-  const [caRt, setCart] = useState<object[]>([]);
   const [state, dispatch] = useReducer(reducer, initialState);
-  
-//  console.log(state)
+ 
+  const handleBook = (book:Book) =>{
+    //  console.log(book)
+    dispatch({type:ADD_BOOK,payload:book})
+  }
+const totalPrice = () => {
+  dispatch({type:TOTAL})
+}
 
-                              ///Quantity///
-  const increase = () => {
-    setQuantity(quantity + 1);
+///Quantity///
+  const increase = (id:string) => {
+    dispatch({type:INCREASE_ITEM, payload:id})
   };
-  const decrease = () => {
-    setQuantity((oldValue) => {
-      if (oldValue - 1 === 0) {
-        return oldValue;
-      }
-      return oldValue - 1;
-    });
+  const decrease = (id:string) => {
+    dispatch({type:DECREASE_ITEM,payload:id})
+   
   };
-                                 /// Quantity//
+/// Quantity//
 
-                               ///BooKPage///
+///BooKPage///
   const AddToCart = (book: Book) => {
     dispatch({type:ADD_TO_CART,payload:book})
-    // const add = [...cart, book];
-    // setCart(add);
   };
-                                 ///BooKPage ///
+  ///BooKPage///
 
-                                /// Cart///
-  const RemToCart = () => {
-    setCart((item) => item.filter((_, index) => index !== 0));
+/// Cart///
+  const RemToCart = (id:string) => {
+    dispatch({type:DELETE_ITEM ,payload:id})
   };
-                               /// Cart///
+/// Cart///
 
-  //    console.log(book)
+    //  console.log(state.book)
   return (
     <AppContext.Provider
       value={{
         ...state,
         AddToCart,
-        caRt,
-        setBook,
-        book,
         RemToCart,
-        quantity,
         decrease,
         increase,
+        handleBook,
+        totalPrice,
       }}
     >
       {children}

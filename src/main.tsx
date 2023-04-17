@@ -6,11 +6,11 @@ import { HashRouter } from 'react-router-dom'
 import {AppProvider} from './context/context'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode >
+  // <React.StrictMode >
     <HashRouter>
       <AppProvider>
         <App />
       </AppProvider>
     </HashRouter>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 )

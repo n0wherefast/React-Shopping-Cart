@@ -5,7 +5,7 @@ import useFetch from "../utils/useFetch";
 import { key } from "../../key";
 
 function BookPage() {
-  const { AddToCart, book, setBook, quantity, cart }: any = useGlobalContext();
+  const { AddToCart, qty, cart, handleBook,book }: any = useGlobalContext();
   const { id } = useParams();
   const [data, loading] = useFetch(
     `https://www.googleapis.com/books/v1/volumes/${id}?key=${key}`
@@ -16,29 +16,29 @@ function BookPage() {
   const description = data && data.volumeInfo.description;
   const thumbnail = data && data.volumeInfo.imageLinks.thumbnail;
 
-  let amount =
-    data && data.saleInfo.listPrice && data.saleInfo.listPrice.amount;
-  let currency =
-    data && data.saleInfo.listPrice.currencyCode === "EUR" ? "€" : null;
 
-  if (amount === undefined) {
+  let amount = data && data.saleInfo.listPrice && data.saleInfo.listPrice.amount;
+  // let currency = data && data.saleInfo.listPrice.currencyCode === "EUR" ? "€" : '';
+  let currency  = ''
+  if (amount  === undefined) {
     amount = "free";
   } else {
-    amount = data && data.saleInfo.listPrice.amount + " " + currency;
+    currency = data && data.saleInfo.listPrice.currencyCode === "EUR" ? "€" : '';
+    amount = data && data.saleInfo.listPrice.amount 
   }
 
   useEffect(() => {
-    setBook({ title, description, thumbnail, amount, quantity });
-  }, [data, cart, quantity]);
+    handleBook({ id, title, description, thumbnail, amount, qty:book.qty })
+  }, [data, cart, qty]);
 
-  console.log();
+  // console.log(book);
 
   return (
     <article className="flex flex-col items-center gap-4 bg-teal-200 ">
       <h1 className=" text-3xl font-bold">{title}</h1>
       <div className=" ">
         <img className=" w-36" src={thumbnail} alt={title} />
-        <div className=" font-semibold text-lg">{amount}</div>
+        <div className=" font-semibold text-lg">{amount} €</div>
         <button
           className=" bg-rose-600 rounded-2xl text-slate-100 font-medium p-2 shadow-2xl hover:bg-red-700"
           onClick={() => AddToCart(book)}
