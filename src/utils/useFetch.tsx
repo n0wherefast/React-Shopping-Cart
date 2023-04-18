@@ -1,22 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import {key} from '../../key'
-
-// const options = {
-// 	method: 'GET',
-// 	headers: {
-// 		'X-RapidAPI-Key': `${key}`,
-// 		'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
-// 	}
-// };
-interface Data {
-  items:object
-  volumeInfo:any
-}
-
+import  { useEffect, useState } from 'react'
+import { Data,Loading } from './typesInterface'
 
 export default function useFetch(url:string) {
-    const [loading,setLoading] = useState(true)
-    const [data,setData] = useState<any>()
+    const [loading,setLoading] = useState<Loading>(true)
+    const [data,setData] = useState<Data>()
 
     useEffect(()=>{
     const fetchData = async() =>{

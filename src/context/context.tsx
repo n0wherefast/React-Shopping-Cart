@@ -1,16 +1,18 @@
 import {useState, useContext, createContext, useEffect,useReducer,} from "react";
 import reducer from "./reducer";
-import { Props,Book,INITIAL_STATE } from "../utils/typesInterface";
+import { Props,Book,INITIAL_STATE} from "../utils/typesInterface";
 import {ADD_TO_CART,
   DELETE_ITEM,
   INCREASE_ITEM,
   DECREASE_ITEM,
   ADD_BOOK,
-  TOTAL} from './action';
+  TOTAL,
+  COUNTER} from './action';
+
 const AppContext = createContext({});
 
 
-const initialState: INITIAL_STATE = {
+const initialState:INITIAL_STATE = {
   book:{
     id: 0,
     title:'',
@@ -28,11 +30,14 @@ const AppProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
  
   const handleBook = (book:Book) =>{
-    //  console.log(book)
+
     dispatch({type:ADD_BOOK,payload:book})
   }
 const totalPrice = () => {
   dispatch({type:TOTAL})
+}
+const totalCount = () => {
+  dispatch({type:COUNTER})
 }
 
 ///Quantity///
@@ -56,8 +61,8 @@ const totalPrice = () => {
     dispatch({type:DELETE_ITEM ,payload:id})
   };
 /// Cart///
+useEffect(()=>{totalPrice(),totalCount()},[state.cart])
 
-    //  console.log(state.book)
   return (
     <AppContext.Provider
       value={{
@@ -67,7 +72,6 @@ const totalPrice = () => {
         decrease,
         increase,
         handleBook,
-        totalPrice,
       }}
     >
       {children}
@@ -80,3 +84,4 @@ const useGlobalContext = () => {
 };
 
 export { AppProvider, useGlobalContext };
+export type { Book };

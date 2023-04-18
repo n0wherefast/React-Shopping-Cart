@@ -1,9 +1,9 @@
-import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination,Autoplay,Navigation } from "swiper";
+import { Autoplay,Navigation } from "swiper";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { book1,book2,book3,book4,book5,book6,book7,book8, } from '../assets/asset';
 
 function Carousel() {
     return (
@@ -25,10 +25,14 @@ function Carousel() {
            
             className="mySwiper"
           >
-    <SwiperSlide><img className='' src="/src/assets/img/pexels-element-digital-1370295.jpg" alt="" /> </SwiperSlide>
-    <SwiperSlide><img className=' ' src="/src/assets/img/pexels-emily-768125.jpg" alt="" /></SwiperSlide>
-    <SwiperSlide><img className=' ' src="/src/assets/img/pexels-stanislav-kondratiev-2908984.jpg" alt="" /></SwiperSlide>
-    <SwiperSlide><img className=' ' src="/src/assets/img/pexels-wendy-van-zyl-1112048.jpg" alt="" /></SwiperSlide>
+    <SwiperSlide><img className='' src={book1} alt="" /> </SwiperSlide>
+    <SwiperSlide><img className=' ' src={book2} alt="" /></SwiperSlide>
+    <SwiperSlide><img className=' ' src={book3} alt="" /></SwiperSlide>
+    <SwiperSlide><img className=' ' src={book4} alt="" /></SwiperSlide>
+    <SwiperSlide><img className=' ' src={book5} alt="" /></SwiperSlide>
+    <SwiperSlide><img className=' ' src={book6} alt="" /></SwiperSlide>
+    <SwiperSlide><img className=' ' src={book7} alt="" /></SwiperSlide>
+    <SwiperSlide><img className=' ' src={book8} alt="" /></SwiperSlide>
           </Swiper>
         </>
       );
