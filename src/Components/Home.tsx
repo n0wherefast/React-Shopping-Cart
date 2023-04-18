@@ -25,9 +25,7 @@ function Home():JSX.Element {
       if(amount! === undefined){
          amount = 'Free'
       }
-      
-    //  console.log(image);
-
+    
     return (<Link key={book.id} to={`/Shoppage/${book.id}`}>
               <BookItem
                 classNameSec={'text-xs m-2   flex items-center h-auto w-[355px] justify-between bg-slate-300 hover:bg-slate-800 shadow-2xl hover:text-white'}
